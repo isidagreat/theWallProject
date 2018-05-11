@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Register and LogIn</title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap-grid.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap-grid.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap-reboot.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap-reboot.min.css')}}">
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js')}}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.bundle.js')}}"></script>
+</head>
+<body>
+	<div class="top-bar">
+	  <h1>theWall</h1>      
+	  <p>Post and Discuss</p>
+	</div>
+
+	<div class="container col-sm-12 row">		
+		<div class="container col-sm-5">
+			<h1>Register Here</h1>
+			<form action="/validate" method="post">
+			{% with messages = get_flashed_messages() %} 
+					{% if messages %} 
+						{% for message in messages %}
+						<div class="alert alert-danger" role="alert">
+  							<strong>{{message}}</strong>
+						</div>
+						{% endfor %}
+					{% endif %}
+				{% endwith %}
+				<div class="form-group row">
+			    	<label for="user_fname">First Name:</label>
+					<input type="text" class="form-control" id="user_fname" name="fname" placeholder="Jen">
+				</div>
+				<div class="form-group row">
+			      <label for="user_lname">Last Name:</label>
+				    	<input type="text" class="form-control" id="user_lname" name="lname" placeholder="Jennet">
+				</div>
+			    <div class="form-group row">
+			      <label for="useremail">Email:</label>
+				    <input type="email" class="form-control" id="useremail" name="email" placeholder="name@example.com">
+				</div>
+				 <div class="form-group row">
+			      <label for="userpword">Password:</label>
+				    <input type="password" class="form-control" id="userpword" name="pword">
+				</div>
+				<div class="form-group row">
+			      <label for="usercpword">Confirm Password:</label>
+				    <input type="password" class="form-control" id="usercpword" name="cpword">
+				</div>
+				<div class="form-group row">
+				    <input type="submit" class="form-control" id="regist" name="register">
+				</div>
+	  		</form>
+  		</div>
+  		<div class="container col-sm-5">
+  			{% with messages = get_flashed_messages() %} 
+					{% if messages %} 
+						{% for message in messages %}
+						<div class="alert alert-danger" role="alert">
+  							<strong>{{message}}</strong>
+						</div>
+						{% endfor %}
+					{% endif %}
+				{% endwith %}
+  			<h1>Log In</h1>
+  			<form action="login" method="post">
+  				<div class="form-group row">
+			      <label for="useremail">Email:</label>
+				    <input type="email" class="form-control" id="useremail" name="email" placeholder="name@example.com">
+				</div>
+				<div class="form-group row">
+			      <label for="usercpword">Password:</label>
+				    <input type="password" class="form-control" id="usercpword" name="cpword">
+				</div>
+				<div class="form-group row">
+				    	<input type="submit" class="form-control" id="regist" name="login">
+				</div>
+  			</form>
+  		</div>	
+	</div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap-grid.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap-grid.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap-reboot.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap-reboot.min.css')}}">
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js')}}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.bundle.js')}}"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="jumbotron row p-3 mb-2 bg-primary text-white">
+			<div class="row col-sm-6">
+			<h1>theWall</h1>      
+			</div>
+		<div class="form-group" class="row col-sm-6">
+			<h4>Welcome: {{session['name']}}</h4>
+			<form action="logout" method="post">
+				<input type="submit" name="logout" value="Log Out">
+			</form>
+		</div>
+		</div>
+		<div class="row col-sm-12 container">
+			{% with messages = get_flashed_messages() %} 
+					{% if messages %} 
+						{% for message in messages %}
+						<div class="alert alert-danger" role="alert">
+  							<strong>{{message}}</strong>
+						</div>
+						{% endfor %}
+					{% endif %}
+				{% endwith %}
+				<form action="/userpost" method="post">
+					<div class="form-group">
+			  			<label for="comment">Make a Post:</label>
+			  			<textarea class="form-control modal-content" rows="3" cols="200" id="comment" name="userpost"></textarea>
+			  			<input type="submit">
+			  		</div>	
+	  			</form>
+			</div>
+			{% for i in range(length)%}
+			<div class="row p-3 mb-2 bg-primary text-white">
+				<div class="col-sm-12 p-3 mb-2 bg-secondary text-white">
+					<h5>{{result[i]['first_name']}} {{result[i]['last_name']}} - {{result[i]['created_at'].strftime('%m-%d-%Y')}}</h5>
+				<p>{{result[i]['message']}}</p>
+				</div>
+				<div class="col-sm-12 col-sm-offset-2 p-3 mb-2 bg-light text-dark">
+					<div class="col-sm-10">
+					{% for j in range(length2)%}
+						{% if result[i]['m_id'] == result2[j]['messages_id'] %}
+							<p>{{result2[j]['first_name']}} {{result2[j]['last_name']}} - {{result2[j]['created_at'].strftime('%m-%d-%Y')}}: {{result2[j]['comment']}}</p>
+							{% if session['userid'] == result2[j]['users.id'] %}
+							<form action="/removecomment" method="post">
+								<div class="form-group">
+								<input type="hidden" name="delconfirm" value="{{result2[j]['users.id']}}">
+								<input type="submit" name="coment_del" value="delete comment">
+								</div>
+							</form>
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+					</div>
+						<form action="/comment" method="post">
+							<div class="form-group">
+					  			<label for="comment">Comment:</label>
+					  			<textarea class="form-control" rows="3" name="usercomment"></textarea>
+					  			<input type="hidden" name="comment_id" value="{{result[i]['m_id']}}">
+					  			<input type="submit">
+			  				</div>
+			  			</form>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			
+	</div>
+</div>
+</body>
+</html>
